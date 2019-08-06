@@ -1,10 +1,10 @@
-import { error } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { ApiResponseData } from './apiResponseData';
 import { AuthService } from './auth.service';
+import { UserModel } from './model/user.model';
 
 @Component({
   selector: 'app-auth',
@@ -16,9 +16,11 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error: string;
+  user: UserModel;
 
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.user = new UserModel();
+  }
 
   onSwichMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -28,28 +30,32 @@ export class AuthComponent {
     if (formValue.invalid) {
       return;
     }
+    // let authObs: Observable<ApiResponseData>;
     let authObs: Observable<ApiResponseData>;
+
+
     this.isLoading = true;
     const email = formValue.value.email;
     const password = formValue.value.password;
 
-    if (this.isLoginMode) {
-      authObs = this.authService.logIn(email, password);
-
-    } else {
+    if (!this.isLoginMode) {
       authObs = this.authService.singUp(email, password);
+    } else {
+      authObs = this.authService.logIn(email, password);
     }
 
     authObs.subscribe(
-      succesRes => {
-        console.log(succesRes);
+      resData => {
+        console.log(resData);
         this.isLoading = false;
-      }
-      , errorMessage => {
+        // this.router.navigate(['/recipes']);
+      },
+      errorMessage => {
+        console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
-      });
-
+      }
+    );
     console.log(formValue.value);
     formValue.reset();
 
