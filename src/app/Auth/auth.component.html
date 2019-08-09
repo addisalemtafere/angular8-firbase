@@ -4,7 +4,7 @@
       <app-loadin-spinner></app-loadin-spinner>
     </div> -->
     {{error}}
-    <div *ngIf="error">
+    <div style="color: red;font-weight: bolder;" *ngIf="error">
       {{error}}
     </div>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">

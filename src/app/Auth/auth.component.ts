@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import {Component} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Observable} from 'rxjs';
 
-import { ApiResponseData } from './apiResponseData';
-import { AuthService } from './auth.service';
-import { UserModel } from './model/user.model';
+import {ApiResponseData} from './apiResponseData';
+import {AuthService} from './auth.service';
+import {UserModel} from './model/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -13,14 +14,18 @@ import { UserModel } from './model/user.model';
 })
 export class AuthComponent {
 
+
   isLoginMode = true;
   isLoading = false;
   error: string;
   user: UserModel;
 
-  constructor(private authService: AuthService) {
+
+  constructor(private authService: AuthService,
+              private router: Router) {
     this.user = new UserModel();
   }
+
 
   onSwichMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -48,7 +53,7 @@ export class AuthComponent {
       resData => {
         console.log(resData);
         this.isLoading = false;
-        // this.router.navigate(['/recipes']);
+        this.router.navigate(['/recipes']);
       },
       errorMessage => {
         console.log(errorMessage);
@@ -56,8 +61,10 @@ export class AuthComponent {
         this.isLoading = false;
       }
     );
-    console.log(formValue.value);
+    // console.log(formValue.value);
     formValue.reset();
 
   }
+
+
 }
