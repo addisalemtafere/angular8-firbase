@@ -3,10 +3,15 @@
     <!-- <div *ngIf="isLoading">
       <app-loadin-spinner></app-loadin-spinner>
     </div> -->
-    {{error}}
-    <div style="color: red;font-weight: bolder;" *ngIf="error">
-      {{error}}
-    </div>
+<!--    {{error}}-->
+<!--    <div style="color: red;font-weight: bolder;" *ngIf="error">-->
+<!--      {{error}}-->
+<!--    </div>-->
+    <app-alert [message]="error" *ngIf="error"
+    (close)="onErrorHandler()">
+
+    </app-alert>
+
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
 
       <div class="form-group">
