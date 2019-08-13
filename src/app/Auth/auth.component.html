@@ -1,17 +1,20 @@
+<ng-template appPlaceHolder></ng-template>
 <div class="row">
   <div class="col-xs-12  col-md-6 col-xs-3">
     <!-- <div *ngIf="isLoading">
       <app-loadin-spinner></app-loadin-spinner>
     </div> -->
-<!--    {{error}}-->
-<!--    <div style="color: red;font-weight: bolder;" *ngIf="error">-->
-<!--      {{error}}-->
-<!--    </div>-->
-    <app-alert [message]="error" *ngIf="error"
-    (close)="onErrorHandler()">
+    <!--    {{error}}-->
+    <!--    <div style="color: red;font-weight: bolder;" *ngIf="error">-->
+    <!--      {{error}}-->
+    <!--    </div>-->
+<!--    <app-alert [message]="error"-->
+<!--               *ngIf="error"-->
+<!--               (close)="onErrorHandler()">-->
 
-    </app-alert>
+<!--    </app-alert>-->
 
+    <!--    <div #addHere></div>-->
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
 
       <div class="form-group">
@@ -25,8 +28,8 @@
       </div>
       <div>
         <button [disabled]="!authForm.valid" class="btn btn-primary"
-          type="submit">{{isLoginMode?'Login':'Sign up'}}</button>
-        <button (click)="onSwichMode()" class="btn btn-primary">Swich to {{isLoginMode? 'Login':'Sign Up'}}</button>
+                type="submit">{{isLoginMode ? 'Login' : 'Sign up'}}</button>
+        <button (click)="onSwichMode()" class="btn btn-primary">Swich to {{isLoginMode ? 'Login' : 'Sign Up'}}</button>
       </div>
     </form>
   </div>
