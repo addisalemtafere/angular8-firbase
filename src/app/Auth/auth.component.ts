@@ -21,7 +21,7 @@ export class AuthComponent implements OnDestroy {
   isLoading = false;
   error: string;
   user: UserModel;
-  @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
+  @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective;
 
   private closeSub: Subscription;
 
