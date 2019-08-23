@@ -36,14 +36,6 @@ export class AuthService {
         }));
   }
 
-  private handleAuthentication(email: string, localId: string, token: string, expiration: number) {
-    const expirationDate = new Date(new Date().getTime() + (expiration) * 1000);
-    const user = new User(email, localId, token, expirationDate);
-    this.user.next(user);
-    this.autLogout(expiration * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
-  }
-
   logIn(email: string, password: string) {
 
     return this.http.post<ApiResponseData>(
@@ -69,7 +61,6 @@ export class AuthService {
 
   }
 
-
   autLogout(expirationDate: number) {
 
     this.tokenExpirationTimer = setTimeout(() => {
@@ -79,6 +70,7 @@ export class AuthService {
 
   autoLogin() {
     let userData: { email: string; id: string; _token: string; _tokenExpirationDate: string };
+    // @ts-ignore
     userData = localStorage.getItem('userData');
     if (!userData) {
       return;
@@ -90,6 +82,14 @@ export class AuthService {
         new Date().getTime();
       this.autLogout(expirationDate);
     }
+  }
+
+  private handleAuthentication(email: string, localId: string, token: string, expiration: number) {
+    const expirationDate = new Date(new Date().getTime() + (expiration) * 1000);
+    const user = new User(email, localId, token, expirationDate);
+    this.user.next(user);
+    this.autLogout(expiration * 1000);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
